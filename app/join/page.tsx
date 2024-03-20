@@ -1,55 +1,67 @@
-'use client';
+"use client";
 
 import { useState } from "react";
-const SERVER = 'http://localhost:8080'
+const SERVER = "http://localhost:8080";
 
 export default function Join() {
-    
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [name, setName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [address, setAddress] = useState('')
+  const [join, setJoin] = useState({
+    username: "",
+    password: "",
+    name: "",
+    phone: "",
+    address: "",
+  });
 
-    const handleChangeUsername = (e:any) => {
-        setUsername(e.target.value)
-    }
-    const handleChangePassword = (e:any) => {
-        setPassword(e.target.value)
-    }
-    const handleChangeName = (e:any) => {
-        setName(e.target.value)
-    }
-    const handleChangePhone = (e:any) => {
-        setPhone(e.target.value)
-    }
-    const handleChangeAddress = (e:any) => {
-        setAddress(e.target.value)
-    }
-    const handleSubmit = () => {
-        alert('리퀘스트가 가져가는 이름 : ' + username + password)
-        const url = `${SERVER}/join`
-        const data = {username, password, name, phone, address}
-        const config = {
-            headers:{
-                "Cache-Control": "no-cache",
-                "Content-Type": "application/json",
-                Authorization: `Bearer blah ~` ,
-                "Access-Control-Allow-Origin": "*",
-            }}
-        
-    }
+  const url = `${SERVER}/join`;
+  const data = { join };
+  const config = {
+    headers: {
+      "Cache-Control": "no-cache",
+      "Content-Type": "application/json",
+      Authorization: `Bearer blah ~`,
+      "Access-Control-Allow-Origin": "*",
+    },
+  };
 
-    return(<>
+  const handleChangeUsername = (e: any) => {
+    setJoin({ ...join, username: e.target.value });
+  };
+  const handleChangePassword = (e: any) => {
+    setJoin({ ...join, password: e.target.value });
+  };
+  const handleChangeName = (e: any) => {
+    setJoin({ ...join, name: e.target.value });
+  };
+  const handleChangePhone = (e: any) => {
+    setJoin({ ...join, phone: e.target.value });
+  };
+  const handleChangeAddress = (e: any) => {
+    setJoin({ ...join, address: e.target.value });
+  };
 
-        <h2>회원가입 페이지</h2>
-        <h5>아이디 : <input type="text" onChange={handleChangeUsername} /></h5> 
-        <h5>비밀번호 : <input type="text" onChange={handleChangePassword} /></h5> 
-        <h5>이름 : <input type="text" onChange={handleChangeName} /></h5> 
-        <h5>전화번호 : <input type="text" onChange={handleChangePhone} /></h5> 
-        <h5>주소 : <input type="text" onChange={handleChangeAddress} /></h5> 
-        <button onClick={handleSubmit}>회원가입 하기</button>
+  const handleSubmit = () => {
+    alert("리퀘스트가 가져가는 이름 : " + join.username);
+  };
+
+  return (
+    <>
+      <h2>회원가입 페이지</h2>
+      <p>
+        아이디 : <input type="text" onChange={handleChangeUsername} />
+      </p>
+      <p>
+        비밀번호 : <input type="text" onChange={handleChangePassword} />
+      </p>
+      <p>
+        이름 : <input type="text" onChange={handleChangeName} />
+      </p>
+      <p>
+        전화번호 : <input type="text" onChange={handleChangePhone} />
+      </p>
+      <p>
+        주소 : <input type="text" onChange={handleChangeAddress} />
+      </p>
+      <button onClick={handleSubmit}>회원가입 하기</button>
     </>
-    )
-
+  );
 }
