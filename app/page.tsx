@@ -36,6 +36,7 @@ export default function Home() {
     <input type="text" onChange={handleChange}/> <br/>
     <button onClick={handleClick}>전송</button> <br/><br/>
     <Link href={"/login"} >로그인</Link>
+    <Link href={"/join"}>회원가입</Link>
     </>
   );
 }
