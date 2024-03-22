@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useState } from "react";
 const SERVER = "http://localhost:8080";
 
@@ -41,26 +42,25 @@ export default function Join() {
 
   const handleSubmit = () => {
     alert("리퀘스트가 가져가는 이름 : " + join.username);
+
+    axios.post(url, data, config).then((res) => {
+      alert("리스폰스가 가져온 이름 : " + JSON.stringify(res.data));
+    });
   };
 
   return (
     <>
-      <h2>회원가입 페이지</h2>
-      <p>
-        아이디 : <input type="text" onChange={handleChangeUsername} />
-      </p>
-      <p>
-        비밀번호 : <input type="text" onChange={handleChangePassword} />
-      </p>
-      <p>
-        이름 : <input type="text" onChange={handleChangeName} />
-      </p>
-      <p>
-        전화번호 : <input type="text" onChange={handleChangePhone} />
-      </p>
-      <p>
-        주소 : <input type="text" onChange={handleChangeAddress} />
-      </p>
+      <h1>회원가입 페이지</h1>
+      <p>아이디</p>
+      <input type="text" onChange={handleChangeUsername} />
+      <p>비밀번호</p>
+      <input type="text" onChange={handleChangePassword} />
+      <p>이름</p>
+      <input type="text" onChange={handleChangeName} />
+      <p>전화번호</p>
+      <input type="text" onChange={handleChangePhone} />
+      <p>주소</p>
+      <input type="text" onChange={handleChangeAddress} />
       <button onClick={handleSubmit}>회원가입 하기</button>
     </>
   );

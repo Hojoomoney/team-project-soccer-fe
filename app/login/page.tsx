@@ -36,7 +36,7 @@ export default function Login() {
 
   return (
     <>
-      <h2>로그인 페이지</h2>
+      <h1>로그인 페이지</h1>
       <p>아이디</p>
       <input type="text" onChange={handleChangeUsername} />
       <p>비밀번호</p>
