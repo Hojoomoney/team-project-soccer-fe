@@ -1,9 +1,9 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
-import countReducer from "@/redux/features/counter/counter.slice";
-import articleReducer from "@/redux/features/articles/article.slice";
+import countReducer from "@/app/components/counter/service/counter-slice";
+import articleReducer from "@/app/components/articles/service/article-slice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import userReducer from "@/redux/features/users/user.slice";
+import userReducer from "@/app/components/users/service/user-slice";
 
 const createNoopStorage = () => {
   return {
