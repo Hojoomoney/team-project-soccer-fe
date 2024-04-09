@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { createSlice } from "@reduxjs/toolkit";
 import { IArticle } from '../model/article';
 import { initialState } from './article-init';
-import { findAllArticles } from './article-service';
+import { findAllArticles, findArticleById } from './article-service';
 
 const articleThunks = [findAllArticles]
 
@@ -41,10 +41,11 @@ export const articleSlice = createSlice({
         builder
         .addCase(findAllArticles.fulfilled, (state: any, {payload}: any) => {state.array = payload}) 
         //switch case랑 유사 (findAllArticles.fulfilled면 handleFulfilled함수를 실행해라)
-
+        .addCase(findArticleById.fulfilled, (state: any, {payload}: any) => {state.array = payload})
     }
 })
 export const getAllArticles = (state: any) => state.article.array // getter
+export const getArticleById = (state: any) => state.article.array
 
 export const {} = articleSlice.actions
 

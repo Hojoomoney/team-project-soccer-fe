@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IBoard } from "../model/board";
-import { findAllBoardsAPI } from "./board-api";
+import { findAllBoardsAPI, findBoardByIdAPI } from "./board-api";
 import axios from "axios";
 import { API } from "@/app/components/common/enums/API";
 import AxiosConfig, { instance } from "@/app/components/common/configs/axios-config";
 
 export const findAllBoards: any = createAsyncThunk(
-    'Boards/findAllBoards',
+    'boards/findAllBoards',
     async (page: number)=>{
         console.log('findAllBoards page : '+ page)
         const data:any = await  findAllBoardsAPI(1);
@@ -16,5 +16,12 @@ export const findAllBoards: any = createAsyncThunk(
         // console.log('message : '+ message)
         // console.log(JSON.stringify(result))
         return data
+    }
+)
+
+export const findBoardById: any = createAsyncThunk(
+    'boards/findBoardId',
+    async (id: number) => {
+        return await findBoardByIdAPI(id)
     }
 )

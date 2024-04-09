@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./user-init";
-import { findAllUsers } from "./user-service";
+import { findAllUsers, findUserById } from "./user-service";
 
 const status = {
     pending: 'pending',
@@ -31,7 +31,12 @@ export const userSlice = createSlice({
         const {pending,rejected} = status;
         
         builder
-        .addCase(findAllUsers.fulfilled, handleFulfilled)
+        .addCase(findAllUsers.fulfilled, (state: any, {payload}: any) => {
+            state.array = payload
+        })
+        .addCase(findUserById.fulfilled, (state: any, {payload}: any) =>{
+            state.array = payload
+        })
     },
     
 })
@@ -40,6 +45,8 @@ export const getAllUsers = (state:any) => {
     //console.log(JSON.stringify(state.user.array))
     return state.user.array
 }
+
+export const getUserById = (state:any) => state.user.array
 
 export const {} = userSlice.actions
 

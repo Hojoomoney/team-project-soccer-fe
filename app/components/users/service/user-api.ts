@@ -13,3 +13,15 @@ export const findAllUsersAPI = async (page:number) => {
         return error
     }
 }
+
+export const findUserByIdAPI = async (id : number) => {
+    try {
+        const response = await instance.get('/users/detail', {
+            params: {id}
+        })
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        return error
+    }
+}
