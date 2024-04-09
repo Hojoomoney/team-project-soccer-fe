@@ -2,6 +2,9 @@ export interface IArticle{
     id : number
     title : string
     content : string
-    registerDate : string,
+    regDate : string
+    modDate : string
+    writerId : number
+    boardId : number
     array: []
 }

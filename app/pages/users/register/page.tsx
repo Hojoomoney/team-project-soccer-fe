@@ -40,7 +40,7 @@ const JoinPage : NextPage = () => {
 
     const handleSubmit = (e:any) => {
         e.preventDefault();
-        axios.post(`${API.SERVER}/users`, 
+        axios.post(`${API.SERVER}/users/save`, 
         {username, password, email, name, phone, job},
          AxiosConfig())
         .then(res => {

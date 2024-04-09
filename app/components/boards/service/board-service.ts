@@ -1,15 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IArticle } from "../model/article";
-import { findAllArticlesAPI } from "./article-api";
+import { IBoard } from "../model/board";
+import { findAllBoardsAPI } from "./board-api";
 import axios from "axios";
 import { API } from "@/app/components/common/enums/API";
 import AxiosConfig, { instance } from "@/app/components/common/configs/axios-config";
 
-export const findAllArticles: any = createAsyncThunk(
-    'articles/findAllArticles',
+export const findAllBoards: any = createAsyncThunk(
+    'Boards/findAllBoards',
     async (page: number)=>{
-        console.log('findAllArticles page : '+ page)
-        const data:any = await  findAllArticlesAPI(1);
+        console.log('findAllBoards page : '+ page)
+        const data:any = await  findAllBoardsAPI(1);
 
         const {message, result}:any = data
         // console.log('----- API 를 사용한 경우 -----')

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchAllUsersAPI } from "./user-api";
+import { findAllUsersAPI } from "./user-api";
 
-export const fetchAllUsers : any = createAsyncThunk(
-    'users/fetchAllUsers',
+export const findAllUsers : any = createAsyncThunk(
+    'users/findAllUsers',
     async (page:number) => {
-        console.log('2번 fetchAllUsers page : '+ page)
-        const data : any = await fetchAllUsersAPI(1);
+        console.log('2번 findAllUsers page : '+ page)
+        const data : any = await findAllUsersAPI(1);
     
         return data;
     }

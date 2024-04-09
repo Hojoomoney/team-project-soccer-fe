@@ -3,9 +3,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { createSlice } from "@reduxjs/toolkit";
 import { IArticle } from '../model/article';
 import { initialState } from './article-init';
-import { fetchAllArticles } from './article-service';
+import { findAllArticles } from './article-service';
 
-const articleThunks = [fetchAllArticles]
+const articleThunks = [findAllArticles]
 
 const status = {
     pending: 'pending',
@@ -39,15 +39,12 @@ export const articleSlice = createSlice({
         const {pending, rejected} = status;
 
         builder
-        .addCase(fetchAllArticles.fulfilled, handleFulfilled) //switch case랑 유사 (fetchAllArticles.fulfilled면 handleFulfilled함수를 실행해라)
+        .addCase(findAllArticles.fulfilled, (state: any, {payload}: any) => {state.array = payload}) 
+        //switch case랑 유사 (findAllArticles.fulfilled면 handleFulfilled함수를 실행해라)
 
     }
 })
-export const getAllArticles = (state: any) => { //getter
-    console.log('------------------ Before useSelector ---------------')
-    console.log(JSON.stringify(state.article.array.result))
-    return state.article.array.result;
-}
+export const getAllArticles = (state: any) => state.article.array // getter
 
 export const {} = articleSlice.actions
 

@@ -1,10 +1,12 @@
 export interface IUser{
-    id : string
+    id : number
     username : string
     password : string
     email : string
     name : string
     phone : string
     job : string
+    regDate : string
+    modDate : string
     array : []
 }

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./user-init";
-import { fetchAllUsers } from "./user-service";
+import { findAllUsers } from "./user-service";
 
 const status = {
     pending: 'pending',
@@ -31,13 +31,13 @@ export const userSlice = createSlice({
         const {pending,rejected} = status;
         
         builder
-        .addCase(fetchAllUsers.fulfilled, handleFulfilled)
+        .addCase(findAllUsers.fulfilled, handleFulfilled)
     },
     
 })
 export const getAllUsers = (state:any) => {
     console.log('----------------33번 Slice : getAllUsers 실행 -----------------')
-    console.log(JSON.stringify(state.user.array))
+    //console.log(JSON.stringify(state.user.array))
     return state.user.array
 }
 

@@ -17,7 +17,7 @@ import { PG } from '@/app/components/common/enums/PG';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-const pages = ['회원가입','로그인', '카운터','게시글목록', '사용자목록'];
+const pages = ['회원가입','로그인', '카운터','게시판목록','게시글목록', '사용자목록'];
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const links = [`${PG.USER}/register`,`${PG.USER}/login`,`${PG.DEMO}/redux-counter`,`${PG.BOARD}/articles`,`${PG.USER}/list`];
@@ -45,8 +45,11 @@ function Header() {
       case '카운터':
         router.push(`${PG.DEMO}/redux-counter`)
         break;
+      case '게시판목록':
+          router.push(`${PG.BOARD}/list`)
+        break;
       case '게시글목록':
-        router.push(`${PG.BOARD}/list`)
+        router.push(`${PG.ARTICLE}/list`)
         break;
       case '사용자목록':
         router.push(`${PG.USER}/list`)

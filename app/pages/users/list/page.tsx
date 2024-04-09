@@ -1,7 +1,6 @@
 'use client'
 import UserColumns from "@/app/components/users/module/user-columns";
-import { IUser } from "@/app/components/users/model/user-model";
-import { fetchAllUsers } from "@/app/components/users/service/user-service";
+import { findAllUsers } from "@/app/components/users/service/user-service";
 import { getAllUsers } from "@/app/components/users/service/user-slice";
 import { DataGrid } from "@mui/x-data-grid";
 import { NextPage } from "next";
@@ -12,14 +11,14 @@ import { useDispatch } from "react-redux";
 const UserListPage : NextPage = () => {
     const [pageSize, setPageSize] = useState(5);
     
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const allUsers : [] = useSelector(getAllUsers)
     if(allUsers !== undefined){
         console.log('끝번 : allUsers is defined')
         console.log('length is ' + allUsers.length)
         for (let i = 0; i < allUsers.length; i++) {
-            console.log(JSON.stringify(allUsers[i]))
+            //console.log(JSON.stringify(allUsers[i]))
         }
     
     } else {
@@ -29,7 +28,7 @@ const UserListPage : NextPage = () => {
 
     useEffect(() => {
         console.log("1번 nnn  useEffect 내부")
-        dispatch(fetchAllUsers(1))
+        dispatch(findAllUsers(1))
     },[] )
 
 
@@ -39,12 +38,12 @@ const UserListPage : NextPage = () => {
         
 
         <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-                    rows={allUsers}
-                    columns={UserColumns()}
-                    pageSizeOptions={[5, 10, 20]}
-                    checkboxSelection
-                />
+        {allUsers && <DataGrid
+            rows={allUsers}
+            columns={UserColumns()}
+            pageSizeOptions={[5, 10, 20]}
+            checkboxSelection
+        /> }
     </div>
     </>)
 }
