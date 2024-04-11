@@ -1,15 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IArticle } from "../model/article";
-import { findAllArticlesAPI, findArticleByIdAPI } from "./article-api";
+import { deleteArticleAPI, findAllArticlesAPI, findArticleByIdAPI, findCountArticlesAPI } from "./article-api";
 import axios from "axios";
 import { API } from "@/app/components/common/enums/API";
 import AxiosConfig, { instance } from "@/app/components/common/configs/axios-config";
+import { modifyUserApi } from "../../users/service/user-api";
 
 export const findAllArticles: any = createAsyncThunk(
     'articles/findAllArticles',
     async (page: number)=>{
         console.log('findAllArticles page : '+ page)
-        const data:any = await  findAllArticlesAPI(1);
+        const data:any = await  findAllArticlesAPI(page);
 
         const {message, result}:any = data
         // console.log('----- API 를 사용한 경우 -----')
@@ -21,7 +22,16 @@ export const findAllArticles: any = createAsyncThunk(
 
 export const findArticleById: any = createAsyncThunk(
     'articles/findArticleById',
-    async (id: number) => {
-        return await findArticleByIdAPI(id)
-    }
+    async (id: number) => (await findArticleByIdAPI(id))
+    
+)
+
+export const findCountArticles : any = createAsyncThunk(
+    'articles/findArticlesCount',
+    async () => (await findCountArticlesAPI())
+)
+
+export const deleteArticle : any = createAsyncThunk(
+    'articles/deleteArticle',
+    async (id : number) => (await deleteArticleAPI(id))
 )

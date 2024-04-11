@@ -1,7 +1,7 @@
 'use client'
 import UserColumns from "@/app/components/users/module/user-columns";
-import { findAllUsers } from "@/app/components/users/service/user-service";
-import { getAllUsers } from "@/app/components/users/service/user-slice";
+import { findAllUsers, findCountUsers } from "@/app/components/users/service/user-service";
+import { getAllUsers, getCountUsers } from "@/app/components/users/service/user-slice";
 import { DataGrid } from "@mui/x-data-grid";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
@@ -12,31 +12,21 @@ const UserListPage : NextPage = () => {
     const [pageSize, setPageSize] = useState(5);
     
     const dispatch = useDispatch();
-
+    const count = useSelector(getCountUsers)
     const allUsers : [] = useSelector(getAllUsers)
-    if(allUsers !== undefined){
-        console.log('끝번 : allUsers is defined')
-        console.log('length is ' + allUsers.length)
-        for (let i = 0; i < allUsers.length; i++) {
-            //console.log(JSON.stringify(allUsers[i]))
-        }
-    
-    } else {
-        console.log('끝번 : allUsers is undefined')
-    }
-
 
     useEffect(() => {
         console.log("1번 nnn  useEffect 내부")
         dispatch(findAllUsers(1))
+        dispatch(findCountUsers())
     },[] )
 
 
     return(<>
     
-    <h1 className="text-center">사용자 목록</h1>
+    <h1 className="text-center">사용자 목록 || 총 회원 수 : {count}</h1>
         
-
+        
         <div style={{ height: 400, width: "100%" }}>
         {allUsers && <DataGrid
             rows={allUsers}

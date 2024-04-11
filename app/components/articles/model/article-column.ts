@@ -1,7 +1,11 @@
 export interface ArticleColumn{
-    id? : number  // ?는 자바의 Optional 없어도 된다라는 뜻
+    id? : number
     title? : string
     content? : string
+    regDate? : string
+    modDate? : string
     writerId? : number
     boardId? : number
+    json? : {}
+    array? : []
 }

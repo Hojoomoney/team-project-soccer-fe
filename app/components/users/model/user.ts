@@ -8,5 +8,7 @@ export interface IUser{
     job : string
     regDate : string
     modDate : string
+    count : number
     array : []
+    json : {}
 }

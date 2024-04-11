@@ -15,10 +15,28 @@ export const findAllArticlesAPI = async (page: number) =>{
 
 export const findArticleByIdAPI = async (id : number) => {
     try {
-        const response = await instance.get('/articles/detail',{
+        const response = await instance.get(`/articles/detail`,{
             params : {id}
         })
         return response.data
+    } catch (error) {
+        return error
+    }
+}
+
+export const findCountArticlesAPI = async () => {
+    try {
+        return (await instance.get(`/articles/count`)).data
+    } catch (error) {
+        return error
+    }
+}
+
+export const deleteArticleAPI = async (id : number) => {
+    try {
+        await instance.delete(`/articles/delete`, {
+            params : {id}
+        })
     } catch (error) {
         return error
     }

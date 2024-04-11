@@ -71,6 +71,22 @@ export default function UserColumns() : GridColDef[] {
             field : 'job',
             headerName : '직업',
             renderCell : ({row} : CellType) => MyTypography(row.job, "1.2rem")
+        },
+        {
+            flex : 0.04,
+            minWidth : 30,
+            sortable : false,
+            field : 'regDate',
+            headerName : '생성일',
+            renderCell : ({row} : CellType) => MyTypography(row.regDate, "1.2rem")
+        },
+        {
+            flex : 0.04,
+            minWidth : 30,
+            sortable : false,
+            field : 'modDate',
+            headerName : '변경일',
+            renderCell : ({row} : CellType) => MyTypography(row.modDate, "1.2rem")
         }
 
     ])
