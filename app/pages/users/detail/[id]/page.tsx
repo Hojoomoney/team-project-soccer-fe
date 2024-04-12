@@ -24,10 +24,21 @@ export default function UserDetailPage (props:any) {
     const dispatch = useDispatch()
     const user : IUser = useSelector(getUserById)
     const router = useRouter();
+    const [modUser,setModUser] = useState({
+        id : props.params.id,
+        password : '',
+        phone : '',
+        job : ''
+    }) 
 
-    const changePasswordHandler = (e:any) => dispatch(passwordHandler(e.target.value))
-    const changePhoneHandler = (e:any) => dispatch(phoneHandler(e.target.value))
-    const changeJobHandler = (e:any) => dispatch(jobHandler(e.target.value))
+    const handleChange = (e:any) => {
+        const { target: {value, name} }= e;
+            
+        setModUser(modUser => ({
+                ...modUser, [name] : value
+            }))
+
+    }
 
     useEffect(() => {
         dispatch(findUserById(props.params.id))
@@ -39,10 +50,10 @@ export default function UserDetailPage (props:any) {
         router.replace(`${PG.USER}/list`)
     }
 
-    const handleModify = (e:any) => {
-        dispatch(modifyUser(user))
+    const handleModify = () => {
+        dispatch(modifyUser(modUser))
         alert("변경되었습니다.")
-        router.refresh()
+        router.push(`${PG.USER}/list`)
     }
 
 
@@ -52,10 +63,10 @@ export default function UserDetailPage (props:any) {
         <h2>사용자 상세정보</h2>
         <p className="text-base">id : {user.id}</p>
             <p className="text-base">아이디 : {user.username}</p>
-            <span className="text-base">비밀번호 : </span><Input className="text-base" placeholder={user.password} onChange={changePasswordHandler} /><br />
+            <span className="text-base">비밀번호 : </span><Input className="text-base" placeholder={user.password} name="password" onChange={handleChange} /><br />
             <p className="text-base">이름 : {user.name}</p>
-            <span className="text-base">전화번호 : </span><Input className="text-base" placeholder={user.phone} onChange={changePhoneHandler} /><br />
-            <span className="text-base">직업 : </span><Input className="text-base" placeholder={user.job} onChange={changeJobHandler} /><br />
+            <span className="text-base">전화번호 : </span><Input className="text-base" placeholder={user.phone} name="phone" onChange={handleChange} /><br />
+            <span className="text-base">직업 : </span><Input className="text-base" placeholder={user.job} name="job" onChange={handleChange} /><br />
         <span>생성일자 : </span><Input id="regDate" defaultValue={user.regDate} readOnly/><br />
         <span>최근 변경 일자 : </span><Input id="modDate" defaultValue={user.modDate} readOnly/><br />
         <Button variant="outlined" onClick={handleModify}>수정</Button>

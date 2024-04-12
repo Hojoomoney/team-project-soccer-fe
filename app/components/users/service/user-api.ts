@@ -42,9 +42,9 @@ export const deleteUserApi = async (id : number) => {
     }
 }
 
-export const modifyUserApi = async (user : IUser) => {
+export const modifyUserApi = async (modUser : {}) => {
     try {
-        return (await instance.put(`/users/modify`,user)).data
+        return (await instance.put(`/users/modify`,modUser)).data
     } catch (error) {
         return error
     }

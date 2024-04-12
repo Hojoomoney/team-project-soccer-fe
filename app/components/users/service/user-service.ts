@@ -29,5 +29,5 @@ export const deleteUser : any = createAsyncThunk(
 
 export const modifyUser : any = createAsyncThunk(
     'users/modifyUser',
-    async (user : IUser) => (await modifyUserApi(user))
+    async (modUser : {}) => (await modifyUserApi(modUser))
 )
