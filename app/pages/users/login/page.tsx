@@ -27,7 +27,7 @@ const LoginPage : NextPage = () => { //component
             alert(message)
             if(message==='SUCCESS'){
                 router.push(`${PG.BOARD}/articles`)
-            }else if (message==='FAIL'){
+            }else if (message==='FAILURE'){
                 alert("Fail")
             }else{
                 alert("지정되지 않은 값")

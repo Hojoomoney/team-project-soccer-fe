@@ -49,3 +49,11 @@ export const modifyUserApi = async (modUser : {}) => {
         return error
     }
 }
+
+export const loginAPI = async (user : IUser) => {
+    try {
+        return (await instance.post(`/users/login`,user)).data.message
+    } catch (error) {
+        return error
+    }
+}

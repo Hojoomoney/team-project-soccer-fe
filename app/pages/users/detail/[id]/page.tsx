@@ -10,7 +10,7 @@ import { findAllBoards } from "@/app/components/boards/service/board-service";
 import { getAllBoards } from "@/app/components/boards/service/board-slice";
 import BoardColumns from "@/app/components/boards/module/board-columns";
 import { MyTypography } from "@/app/components/common/style/cell";
-import { getAllUsers, getCountUsers, getUserById, jobHandler, passwordHandler, phoneHandler } from "@/app/components/users/service/user-slice";
+import { getAllUsers, getCountUsers, getUserById} from "@/app/components/users/service/user-slice";
 import { deleteUser, findCountUsers, findUserById, modifyUser } from "@/app/components/users/service/user-service";
 import { IUser } from "@/app/components/users/model/user";
 import { PG } from "@/app/components/common/enums/PG";

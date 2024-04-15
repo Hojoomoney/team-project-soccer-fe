@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./user-init";
-import { findCountUsers, findAllUsers, findUserById, deleteUser, modifyUser } from "./user-service";
+import { findCountUsers, findAllUsers, findUserById, deleteUser, modifyUser, login } from "./user-service";
 
 const status = {
     pending: 'pending',
@@ -15,22 +15,10 @@ const handleFulfilled =  (state: any, {payload}: any) => {
 
 }
 
-
-const handlePending = (state: any) => {
-  
-}
-
-const handleRejected = (state: any) => {
-  
-}
 export const userSlice = createSlice({
     name : "user",
     initialState,
-    reducers : {
-        passwordHandler : (state : any, {payload}) => {state.json.password = payload},
-        phoneHandler : (state : any, {payload}) => {state.json.phone = payload},
-        jobHandler : (state : any, {payload}) => {state.json.job = payload}
-    },
+    reducers : {},
     extraReducers :builder => {
         const {pending,rejected} = status;
         
@@ -47,6 +35,9 @@ export const userSlice = createSlice({
         .addCase(modifyUser.fulfilled, (state: any, {payload} : any) => {
             state.json = payload
         })
+        .addCase(login.fulfilled, (state:any, {payload} : any) => {
+            state.message = payload
+        })
     },
     
 })
@@ -58,6 +49,6 @@ export const getAllUsers = (state:any) => {
 
 export const getUserById = (state:any) => state.user.array
 export const getCountUsers = (state:any) => state.user.count
+export const getMessage = (state:any) => state.user.message
 
-export const {passwordHandler, phoneHandler, jobHandler} = userSlice.actions
 export default userSlice.reducer;

@@ -12,5 +12,6 @@ export const initialState : IUser = {
     modDate: '',
     count: 0,
     array: [],
-    json: {}
+    json: {},
+    message: ''
 }

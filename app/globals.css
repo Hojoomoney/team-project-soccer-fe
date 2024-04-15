@@ -11,3 +11,18 @@
     border-right : solid 1px black;
     border-bottom : solid 1px black;
 }
+
+/*  external css to add in tailwind's Global css
+ no-scrollbar(class) */
+
+@layer utilities {
+    @variants responsive {
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
+}
