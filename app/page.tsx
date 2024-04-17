@@ -8,12 +8,16 @@ import { NextPage } from "next";
 import { useDispatch } from "react-redux";
 import { login } from "./components/users/service/user-service";
 import { useSelector } from "react-redux";
-import { getMessage } from "./components/users/service/user-slice";
+import { getAuth } from "./components/users/service/user-slice";
 import { IUser } from "./components/users/model/user";
+import nookies,{ parseCookies, destroyCookie, setCookie } from "nookies";
 
 export default function Home() {
   const dispatch = useDispatch()
-  const message = useSelector(getMessage)
+  const auth = useSelector(getAuth)
+
+
+  
 
   const [user, setUser] = useState({} as IUser)
   const handleChangeUsername = (e: any) => {
@@ -36,17 +40,22 @@ export default function Home() {
     dispatch(login(user))
   }
   useEffect(() => {
-    console.log(message)
-    if (message === 'SUCCESS') {
-      alert(message)
-      router.push(`${PG.BOARD}/list`)
-    } else if(message === 'FAILURE') {
+    console.log(auth.message)
+    if (auth.message === 'SUCCESS') {
+      setCookie({},'message', auth.message,{ httpOnly: false, path: '/' })
+      setCookie({},'token', auth.token,{ httpOnly: false, path: '/' })
+      console.log('서버에서 넘어온 메시지' + parseCookies().message)
+      console.log('서버에서 넘어온 토큰' + parseCookies().token)
+      router.push(`${PG.BOARD}/card`)
+    } else if(auth.message === 'FAILURE') {
       console.log('Login Fail')
     }
-  }, [message])
+  }, [auth])
   return (
     <div>
       <div className='text-center'><h1><b>Welcome to React World !</b></h1></div><br />
+      <h2>ID : alamblot0</h2>
+      <h2>Password : sV1@95</h2>
       <div className="flex items-center justify-center w-full px-5 sm:px-0">
         <div className="flex bg-white rounded-lg shadow-lg border overflow-hidden max-w-sm lg:max-w-4xl w-full">
           <div

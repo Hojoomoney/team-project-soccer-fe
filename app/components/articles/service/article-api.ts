@@ -41,3 +41,13 @@ export const deleteArticleAPI = async (id : number) => {
         return error
     }
 }
+
+export const findAllByBoardIdApi = async (id: number) => {
+    try {
+        return (await instance.get(`/articles/listById`, {
+            params : {id}
+        })).data
+    } catch (error) {
+        return error
+    }
+}

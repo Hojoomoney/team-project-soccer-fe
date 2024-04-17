@@ -52,7 +52,7 @@ export const modifyUserApi = async (modUser : {}) => {
 
 export const loginAPI = async (user : IUser) => {
     try {
-        return (await instance.post(`/users/login`,user)).data.message
+        return (await instance.post(`/users/login`,user)).data
     } catch (error) {
         return error
     }

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { initialState } from "./user-init";
 import { findCountUsers, findAllUsers, findUserById, deleteUser, modifyUser, login } from "./user-service";
+import { IUser } from "../model/user";
 
 const status = {
     pending: 'pending',
@@ -13,6 +13,21 @@ const handleFulfilled =  (state: any, {payload}: any) => {
     state.array = payload
     console.log(state.array)
 
+}
+interface IAuth {
+    message? : string,
+    token? : string
+}
+interface UserState {
+    array? : Array<IUser>,
+    json? : IUser,
+    auth? : IAuth
+}
+
+export const initialState : UserState = {
+    json : {} as IUser,
+    array : [],
+    auth : {} as IAuth
 }
 
 export const userSlice = createSlice({
@@ -36,7 +51,7 @@ export const userSlice = createSlice({
             state.json = payload
         })
         .addCase(login.fulfilled, (state:any, {payload} : any) => {
-            state.message = payload
+            state.auth = payload
         })
     },
     
@@ -49,6 +64,6 @@ export const getAllUsers = (state:any) => {
 
 export const getUserById = (state:any) => state.user.array
 export const getCountUsers = (state:any) => state.user.count
-export const getMessage = (state:any) => state.user.message
+export const getAuth = (state:any) => state.user.auth
 
 export default userSlice.reducer;

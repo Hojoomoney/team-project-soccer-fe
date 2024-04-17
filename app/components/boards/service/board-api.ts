@@ -23,3 +23,11 @@ export const findBoardByIdAPI = async (id : number) => {
         return error
     }
 }
+
+export const findCountBoardsAPI = async () => {
+    try {
+        return (await instance.get(`/boards/count`)).data
+    } catch (error) {
+        return error
+    }
+}

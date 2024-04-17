@@ -7,7 +7,7 @@ import {Box, Button, Input, Typography} from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import { NextPage } from "next";
 import { findAllBoards, findBoardById } from "@/app/components/boards/service/board-service";
-import { getAllBoards, getBoardById } from "@/app/components/boards/service/board-slice";
+import { getAllBoards, getSingleBoard } from "@/app/components/boards/service/board-slice";
 import BoardColumns from "@/app/components/boards/module/board-columns";
 import { rowSelectionStateInitializer } from "@mui/x-data-grid/internals";
 import { propsToClassKey } from "@mui/styles";
@@ -20,7 +20,7 @@ import { MyTypography } from "@/app/components/common/style/cell";
 export default function BoardDetailPage (props:any) {
 
     const dispatch = useDispatch();
-    const board = useSelector(getBoardById)
+    const board = useSelector(getSingleBoard)
 
     useEffect(() => {
         console.log("1번 nnn  useEffect 내부")

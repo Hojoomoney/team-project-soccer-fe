@@ -9,7 +9,5 @@ export interface IUser{
     regDate? : string
     modDate? : string
     count? : number
-    array? : []
-    json? : {}
-    message? : string
+    
 }
