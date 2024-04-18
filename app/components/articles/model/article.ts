@@ -6,7 +6,7 @@ export interface IArticle{
     modDate? : string
     writerId? : number
     boardId? : number
-    count? : number
+    message? : string
     json? : IArticle
     array? : IArticle[]
 }

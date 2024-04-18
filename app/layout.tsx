@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { getAuth } from "./components/users/service/user-slice";
 import { useSelector } from "react-redux";
 import { parseCookies } from "nookies";
-import DashHeader from "./components/common/module/dash-header";
 
 const ReduxProvider = dynamic(() => import("@/redux/redux-provider"), {
   ssr: false
@@ -31,7 +30,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {parseCookies().message === 'SUCCESS' && <Header/>}
-        {parseCookies().message === 'ADMIN' && <DashHeader/>}
         <div className="mt-100">
         <ReduxProvider> {children}</ReduxProvider>
         </div>

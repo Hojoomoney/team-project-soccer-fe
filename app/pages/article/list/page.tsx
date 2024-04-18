@@ -1,7 +1,9 @@
 'use client'
+import MoveButton from "@/app/atom/button/MoveButton";
 import articleColumns from "@/app/components/articles/module/article-columns";
 import { findAllArticles, findCountArticles } from "@/app/components/articles/service/article-service";
 import { getAllArticles, getCountArticles } from "@/app/components/articles/service/article-slice";
+import { PG } from "@/app/components/common/enums/PG";
 import { alpha, gridClasses, styled } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { NextPage } from "next";

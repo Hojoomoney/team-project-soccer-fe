@@ -1,6 +1,5 @@
 import { IBoard } from "@/app/components/boards/model/board";
 import { PG } from "@/app/components/common/enums/PG";
-import { alignProperty } from "@mui/material/styles/cssUtils";
 import Link from "next/link";
 
 export default function CardButton({id,title,description} : IBoard) {

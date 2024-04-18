@@ -1,4 +1,5 @@
 import { instance } from '@/app/components/common/configs/axios-config'
+import { IArticle } from '../model/article'
 
 export const findAllArticlesAPI = async (page: number) =>{
     try{
@@ -44,9 +45,17 @@ export const deleteArticleAPI = async (id : number) => {
 
 export const findAllByBoardIdApi = async (id: number) => {
     try {
-        return (await instance.get(`/articles/listById`, {
+        return (await instance.get(`/articles/list`, {
             params : {id}
         })).data
+    } catch (error) {
+        return error
+    }
+}
+
+export const saveArticleApi = async (article : IArticle) => {
+    try {
+        return (await instance.post(`/articles/save`, article)).data
     } catch (error) {
         return error
     }

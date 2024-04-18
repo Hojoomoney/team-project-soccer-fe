@@ -10,27 +10,27 @@ import { login } from "./components/users/service/user-service";
 import { useSelector } from "react-redux";
 import { getAuth } from "./components/users/service/user-slice";
 import { IUser } from "./components/users/model/user";
-import nookies,{ parseCookies, destroyCookie, setCookie } from "nookies";
+import nookies, { parseCookies, destroyCookie, setCookie } from "nookies";
 
 export default function Home() {
   const dispatch = useDispatch()
   const auth = useSelector(getAuth)
 
 
-  
+
 
   const [user, setUser] = useState({} as IUser)
   const handleChangeUsername = (e: any) => {
     setUser({
       ...user,
-      username : e.target.value
+      username: e.target.value
     })
-    
+
   }
   const handleChangePassword = (e: any) => { //eventhandler
     setUser({
       ...user,
-      password : e.target.value
+      password: e.target.value
     })
   }
   const router = useRouter();
@@ -42,12 +42,12 @@ export default function Home() {
   useEffect(() => {
     console.log(auth.message)
     if (auth.message === 'SUCCESS') {
-      setCookie({},'message', auth.message,{ httpOnly: false, path: '/' })
-      setCookie({},'token', auth.token,{ httpOnly: false, path: '/' })
+      setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
+      setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
       console.log('서버에서 넘어온 메시지' + parseCookies().message)
       console.log('서버에서 넘어온 토큰' + parseCookies().token)
-      router.push(`${PG.BOARD}/card`)
-    } else if(auth.message === 'FAILURE') {
+      router.push(`${PG.BOARD}/list`)
+    } else if (auth.message === 'FAILURE') {
       console.log('Login Fail')
     }
   }, [auth])
