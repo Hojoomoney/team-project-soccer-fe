@@ -6,39 +6,59 @@ import { PG } from "./components/common/enums/PG";
 import { useRouter } from "next/navigation";
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
-import { login } from "./components/users/service/user-service";
+import { existsByUsername, login } from "./components/users/service/user-service";
 import { useSelector } from "react-redux";
-import { getAuth } from "./components/users/service/user-slice";
+import { getAuth, getExistsByUsername } from "./components/users/service/user-slice";
 import { IUser } from "./components/users/model/user";
 import nookies, { parseCookies, destroyCookie, setCookie } from "nookies";
+import { jwtDecode } from "jwt-decode";
 
 export default function Home() {
   const dispatch = useDispatch()
   const auth = useSelector(getAuth)
-
-
-
-
+  const isExistByUsername = useSelector(getExistsByUsername)
   const [user, setUser] = useState({} as IUser)
+  const [isWrongId, setIsWrongId] = useState(false)
+  const [isWrongPw, setIsWrongPw] = useState(false)
+
+
   const handleChangeUsername = (e: any) => {
+    const ID_CHECK = /^[a-z][a-z0-9]{5,19}$/g;
+    //영어 소문자로 시작하는 6~20 자의 영어 소문자 또는 숫자 
     setUser({
       ...user,
       username: e.target.value
     })
-
+    if(ID_CHECK.test(e.target.value)){
+      setIsWrongId(false)
+    } 
+    else{
+      setIsWrongId(true)
+    }
   }
   const handleChangePassword = (e: any) => { //eventhandler
+    const PW_CHECK = /^[a-z0-9][a-zA-Z0-9`~!@#$%^&*()-_=+\|[\]{};:'",.<>/?]{3,10}$/g;
     setUser({
       ...user,
       password: e.target.value
     })
+    //영어 소문자로 시작하는 6~20 자의 영어 소문자 또는 숫자
+    if(PW_CHECK.test(e.target.value)){
+      setIsWrongPw(false)
+    } 
+    else{
+      setIsWrongPw(true)
+    }
   }
   const router = useRouter();
-
+  
   const handleSubmit = () => {
     alert('user ... ' + JSON.stringify(user))
+    //dispatch(existsByUsername(user.username))
+    router.refresh
     dispatch(login(user))
   }
+  
   useEffect(() => {
     console.log(auth.message)
     if (auth.message === 'SUCCESS') {
@@ -46,6 +66,8 @@ export default function Home() {
       setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
       console.log('서버에서 넘어온 메시지' + parseCookies().message)
       console.log('서버에서 넘어온 토큰' + parseCookies().token)
+      console.log('토큰을 디코드한 내용 : ')
+      console.log(jwtDecode<any>(parseCookies().token))
       router.push(`${PG.BOARD}/list`)
     } else if (auth.message === 'FAILURE') {
       console.log('Login Fail')
@@ -75,6 +97,22 @@ export default function Home() {
                 type="email" name="username" onChange={handleChangeUsername}
                 required />
             </div>
+            {isWrongId && (user.username?.length != 0) && (<pre>
+              <h6 className="text-red-500">
+                잘못된 형식입니다.
+              </h6>
+            </pre>)}
+            {!isWrongId && (user.username != undefined) && (<pre>
+              <h6 className="text-green-500">
+               올바른 형식입니다.
+              </h6>
+            </pre>)}
+          
+            {!isExistByUsername && (user.username?.length !== 0) && user.username != undefined &&(<pre>
+              <h6 className="text-red-500">
+                존재하지 않는 아이디입니다.
+              </h6>
+            </pre>)}
             <div className="mt-4 flex flex-col justify-between">
               <div className="flex justify-between">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -91,6 +129,11 @@ export default function Home() {
                 Forget Password?
               </a>
             </div>
+            {isWrongPw && (user.password?.length !== 0) && (<pre>
+              <h6 className="text-red-500">
+                잘못된 비밀번호 입니다.
+              </h6>
+            </pre>)}
             <div className="mt-8">
               <button onClick={handleSubmit} className="bg-blue-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-600">
                 Login

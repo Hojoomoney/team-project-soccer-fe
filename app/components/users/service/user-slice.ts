@@ -6,6 +6,7 @@ import {
   deleteUser,
   modifyUser,
   login,
+  existsByUsername,
 } from "./user-service";
 import { IUser } from "../model/user";
 
@@ -27,6 +28,7 @@ interface IAuth {
 interface UserState {
   array?: Array<IUser>;
   json?: IUser;
+  isExist? : boolean
   auth?: IAuth;
 }
 
@@ -34,6 +36,7 @@ export const initialState: UserState = {
   json: {} as IUser,
   array: [],
   auth: {} as IAuth,
+  isExist : true
 };
 
 export const userSlice = createSlice({
@@ -58,6 +61,10 @@ export const userSlice = createSlice({
       })
       .addCase(login.fulfilled, (state: any, { payload }: any) => {
         state.auth = payload;
+      })
+      .addCase(existsByUsername.fulfilled, (state : any, {payload} : any) => {
+        console.log(payload);
+        state.isExist = payload;
       });
   },
 });
@@ -72,5 +79,6 @@ export const getAllUsers = (state: any) => {
 export const getUserById = (state: any) => state.user.array;
 export const getCountUsers = (state: any) => state.user.count;
 export const getAuth = (state: any) => state.user.auth;
+export const getExistsByUsername = (state : any) => state.user.isExist;
 
 export default userSlice.reducer;
