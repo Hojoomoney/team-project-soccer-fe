@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link";
 import "./globals.css";
 import { PG } from "./components/common/enums/PG";
@@ -12,11 +12,13 @@ import { getAuth, getExistsByUsername } from "./components/users/service/user-sl
 import { IUser } from "./components/users/model/user";
 import nookies, { parseCookies, destroyCookie, setCookie } from "nookies";
 import { jwtDecode } from "jwt-decode";
+import { resolve } from "path/win32";
 
 export default function Home() {
   const dispatch = useDispatch()
   const auth = useSelector(getAuth)
   const isExistByUsername = useSelector(getExistsByUsername)
+  const passwordRef = useRef<HTMLInputElement>(null);
   const [user, setUser] = useState({} as IUser)
   const [isWrongId, setIsWrongId] = useState(false)
   const [isWrongPw, setIsWrongPw] = useState(false)
@@ -54,25 +56,58 @@ export default function Home() {
   
   const handleSubmit = () => {
     alert('user ... ' + JSON.stringify(user))
-    //dispatch(existsByUsername(user.username))
-    router.refresh
-    dispatch(login(user))
+    dispatch(existsByUsername(user.username))
+    .then((res : any) => {
+      if (res.payload === true) {
+
+        dispatch(login(user))
+          .then((res:any) => {
+            setCookie({}, 'message', res.payload.message, { httpOnly: false, path: '/' })
+            setCookie({}, 'accessToken', res.payload.accessToken, { httpOnly: false, path: '/' })
+            console.log('서버에서 넘어온 메시지' + parseCookies().message)
+            console.log('서버에서 넘어온 토큰' + parseCookies().accessToken)
+            console.log('토큰을 디코드한 내용 : ')
+            console.log(jwtDecode<any>(parseCookies().accessToken))
+            router.push(`${PG.BOARD}/list`)
+            router.refresh()
+         })
+          .catch((err:any)=>{
+          console.log('로그인 실패')
+          })
+        
+      } else {
+        console.log('아이디가 존재하지 않습니다')
+        setIsWrongId(false)
+        setIsWrongPw(false)
+       
+      }
+    })
+    .catch((err : any) => {
+
+    })
+    .finally(()=>{
+      console.log('최종적으로 반드시 이뤄져야 할 로직')
+    })
+    if(passwordRef.current) {
+      passwordRef.current.value = "";
+    }
+    //dispatch(login(user))
   }
   
-  useEffect(() => {
-    console.log(auth.message)
-    if (auth.message === 'SUCCESS') {
-      setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
-      setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
-      console.log('서버에서 넘어온 메시지' + parseCookies().message)
-      console.log('서버에서 넘어온 토큰' + parseCookies().token)
-      console.log('토큰을 디코드한 내용 : ')
-      console.log(jwtDecode<any>(parseCookies().token))
-      router.push(`${PG.BOARD}/list`)
-    } else if (auth.message === 'FAILURE') {
-      console.log('Login Fail')
-    }
-  }, [auth])
+  // useEffect(() => {
+  //   console.log(auth.message)
+  //   if (auth.message === 'SUCCESS') {
+  //     setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
+  //     setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
+  //     console.log('서버에서 넘어온 메시지' + parseCookies().message)
+  //     console.log('서버에서 넘어온 토큰' + parseCookies().token)
+  //     console.log('토큰을 디코드한 내용 : ')
+  //     console.log(jwtDecode<any>(parseCookies().token))
+  //     router.push(`${PG.BOARD}/list`)
+  //   } else if (auth.message === 'FAILURE') {
+  //     console.log('Login Fail')
+  //   }
+  // }, [auth])
   return (
     <div>
       <div className='text-center'><h1><b>Welcome to React World !</b></h1></div><br />

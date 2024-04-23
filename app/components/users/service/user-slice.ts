@@ -60,6 +60,7 @@ export const userSlice = createSlice({
         state.json = payload;
       })
       .addCase(login.fulfilled, (state: any, { payload }: any) => {
+        console.log(payload)
         state.auth = payload;
       })
       .addCase(existsByUsername.fulfilled, (state : any, {payload} : any) => {

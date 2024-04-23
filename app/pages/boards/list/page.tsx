@@ -10,15 +10,16 @@ import { useSelector } from "react-redux"
 
 export default function BoardCards() {
 
-    const allBoards : IBoard[] = useSelector(getAllBoards)
-    const dispatch = useDispatch()
+    // const allBoards : IBoard[] = useSelector(getAllBoards)
+    // const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(findAllBoards(1))
-    },[])
+    // useEffect(() => {
+    //     dispatch(findAllBoards(1))
+    // },[])
     return (<>
-        {allBoards.map((board : IBoard) => (
+    <h1>게시판 목록입니다.</h1>
+        {/* {allBoards.map((board : IBoard) => (
             <CardButton key={board.id} id={board.id} title={board.title} description={board.description} regDate={""} modDate={""}/>
-        ))}
+        ))} */}
     </>)
 }
