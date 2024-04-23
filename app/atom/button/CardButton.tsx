@@ -8,7 +8,7 @@ export default function CardButton({id,title,description} : IBoard) {
         <div key={id} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             
             <Link href={`${PG.BOARD}/detail/${id}`}>
-                <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+                <img className="rounded-t-lg" src="/img/board/board.jpg" alt="" />
             </Link>
             <div className="p-5">
                 <Link href={`${PG.BOARD}/detail/${id}`}>

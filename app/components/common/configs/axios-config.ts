@@ -1,5 +1,5 @@
-import axios from "axios"
-import { parseCookies } from "nookies"
+import axios, { AxiosInstance } from "axios";
+import { parseCookies } from "nookies";
 
 // export default function AxiosConfig(){
 //     return {
@@ -11,31 +11,34 @@ import { parseCookies } from "nookies"
 //         }
 //     }
 // }
+export default function instance() {
+  const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
+  setIntercepter(instance)
+  return instance
+}
 
-const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL})
-
-instance.interceptors.request.use(
-    (config) => {  //성공
-        const accessToken = parseCookies().accessToken;
-        console.log('Axios Intercepter Parsing Cookies Token : Success')
-        config.headers['Content-Type'] = "application/json"
-        config.headers['Authorization'] = `Bearer ${accessToken}`
-        return config
+export const setIntercepter = (inputInstance:AxiosInstance) => {
+    inputInstance.interceptors.request.use(
+    (config) => {
+      //성공
+      console.log("Axios Intercepter Parsing Cookies Token : Success");
+      config.headers["Content-Type"] = "application/json";
+      config.headers["Authorization"] = `Bearer ${parseCookies().accessToken}`;
+      return config;
     },
-    (error) => {   //실패
-        console.log('Axios Intercepter Error : ' + error)
-        return Promise.reject(error)
+    (error) => {
+      //실패
+      console.log("Axios Intercepter Error : " + error);
+      return Promise.reject(error);
     }
-)
+  );
 
-instance.interceptors.response.use(
+  inputInstance.interceptors.response.use(
     (response) => {
-
-        if(response.status === 404){
-            console.log('404 page Reason : No Token Axios Intercepter Error')
-        }
-        return response
+    if (response.status === 404) {
+      console.log("404 page Reason : No Token Axios Intercepter Error");
     }
-)
+    return response;
+  });
 
-export default instance 
+}

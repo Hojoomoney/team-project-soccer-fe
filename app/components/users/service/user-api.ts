@@ -4,7 +4,7 @@ import { IUser } from "../model/user"
 export const findAllUsersAPI = async (page:number) => {
     try {
         console.log("3번")
-        const response = await instance.get('/users/list', {
+        const response = await instance().get('/users/list', {
             params: {page,size: 10, limit:10}
         })
         return response.data
@@ -16,7 +16,7 @@ export const findAllUsersAPI = async (page:number) => {
 
 export const findUserByIdAPI = async (id : number) => {
     try {
-        return (await instance.get('/users/detail', {
+        return (await instance().get('/users/detail', {
             params: {id}
         })).data;
     } catch (error) {
@@ -26,7 +26,7 @@ export const findUserByIdAPI = async (id : number) => {
 
 export const findCountUsersAPI = async () => {
     try {
-        return (await instance.get(`/users/count`)).data
+        return (await instance().get(`/users/count`)).data
     } catch (error) {
         return error
     }
@@ -34,7 +34,7 @@ export const findCountUsersAPI = async () => {
 
 export const deleteUserApi = async (id : number) => {
     try {
-        await instance.delete(`/users/delete`, {
+        await instance().delete(`/users/delete`, {
             params : {id}
         })
     } catch (error) {
@@ -44,7 +44,7 @@ export const deleteUserApi = async (id : number) => {
 
 export const modifyUserApi = async (modUser : {}) => {
     try {
-        return (await instance.put(`/users/modify`,modUser)).data
+        return (await instance().put(`/users/modify`,modUser)).data
     } catch (error) {
         return error
     }
@@ -52,7 +52,7 @@ export const modifyUserApi = async (modUser : {}) => {
 
 export const loginAPI = async (user : IUser) => {
     try {
-        return (await instance.post(`/users/login`,user)).data
+        return (await instance().post(`/auth/login`,user)).data
     } catch (error) {
         return error
     }
@@ -60,7 +60,7 @@ export const loginAPI = async (user : IUser) => {
 
 export const existsByUsernameAPI = async (username : string) => {
     try {
-        return (await instance.get(`/users/exists-username`, {
+        return (await instance().get(`/auth/exists-username`, {
             params : {username}
         }
         )).data
@@ -71,9 +71,7 @@ export const existsByUsernameAPI = async (username : string) => {
 
 export const logoutAPI = async () => {
     try {
-        return (await instance.get(`/users/logout`,{
-            params : {}
-        })).data
+        return (await instance().get(`/users/logout`)).data
     } catch (error) {
         return error
     }

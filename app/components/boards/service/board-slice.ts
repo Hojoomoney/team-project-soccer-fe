@@ -49,7 +49,8 @@ export const boardSlice = createSlice({
         builder
         .addCase(findAllBoards.fulfilled, handleFulfilled) //switch case랑 유사 (findAllboards.fulfilled면 handleFulfilled함수를 실행해라)
         .addCase(findBoardById.fulfilled, (state:any,{payload} : any) => {state.array = payload})
-        .addCase(findCountBoards.fulfilled, (state:any, {payload} : any) => {state.count = payload})
+        .addCase(findCountBoards.fulfilled, (state:any, {payload} : any) => {
+            state.count = payload})
     }
 })
 export const getAllBoards = (state: any) => { //getter
