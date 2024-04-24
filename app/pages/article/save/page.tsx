@@ -3,6 +3,9 @@
 import { IArticle } from "@/app/components/articles/model/article"
 import { saveArticle } from "@/app/components/articles/service/article-service"
 import { getMessageSave } from "@/app/components/articles/service/article-slice"
+import { IBoard } from "@/app/components/boards/model/board"
+import { findAllBoards } from "@/app/components/boards/service/board-service"
+import { getAllBoards } from "@/app/components/boards/service/board-slice"
 import { PG } from "@/app/components/common/enums/PG"
 import { NextPage } from "next"
 import { useRouter } from "next/navigation"
@@ -11,11 +14,13 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 
 export default function ArticleSavePage() {
-  const dispatch = useDispatch()
+  const [content, setContent] = useState("")
+  const boards = useSelector(getAllBoards)
   const message = useSelector(getMessageSave)
   const [article, setArticle] = useState({} as IArticle)
   const router = useRouter()
-  const handleChangeSelect = (e: any) => {
+  const dispatch = useDispatch()
+  const selectHandler = (e: any) => {
     setArticle({
       ...article,
       boardId: e.target.value
@@ -44,8 +49,14 @@ export default function ArticleSavePage() {
     router.push(`${PG.ARTICLE}/list/${article.boardId}`)
   }
 
+  const options = [
+    {id : 1, title : "reviews", content : "리뷰게시판"},
+    {id : 2, title : "qna" , content : "Q&A"},
+    {id : 3, title : "free", content : "자유게시판"}
+  ]
+
   useEffect(() => {
-    message
+    dispatch(findAllBoards(1))
   }, [])
 
   return (
@@ -54,10 +65,11 @@ export default function ArticleSavePage() {
 
       <form className="max-w-sm mx-auto">
         <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-        <select onChange={handleChangeSelect} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>게시판을 선택하세요</option>
-          <option value="1">Reviews</option>
-          <option value="2">QnA</option>
+        <select onChange={selectHandler} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          {boards.map((board : any) => (
+            <option key={board.id} title={board.title} value={board.id} >{board.content}</option>
+          ))
+          }
         </select>
       </form>
 
