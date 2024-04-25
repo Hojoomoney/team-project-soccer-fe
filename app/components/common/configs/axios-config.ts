@@ -36,7 +36,7 @@ export const setIntercepter = (inputInstance:AxiosInstance) => {
   inputInstance.interceptors.response.use(
     (response) => {
     if (response.status === 404) {
-      console.log("404 page Reason : No Token Axios Intercepter Error");
+      console.log("404 page Reason : No Token!! - Axios Intercepter Error");
     }
     return response;
   });

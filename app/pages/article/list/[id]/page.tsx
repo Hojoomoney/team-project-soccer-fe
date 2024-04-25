@@ -58,7 +58,9 @@ const articleListPage : NextPage = (props: any) => {
                     columns={articleColumns()}
                     pageSizeOptions={[5, 10, 20]}
                     checkboxSelection
-                /> }
+                /> 
+                
+        }
     </div>
     </>)
 }

@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form"
 import { jwtDecode } from "jwt-decode"
 import { parseCookies } from "nookies"
 
-export default function ArticleSavePage() {
+export default function UpdateArticlePage() {
 
   const {register, handleSubmit, formState : {errors} } = useForm();
   const [content, setContent] = useState("")
