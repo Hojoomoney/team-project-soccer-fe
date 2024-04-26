@@ -38,16 +38,16 @@ const JoinPage : NextPage = () => {
     }
     const router = useRouter();
 
-    const handleSubmit = (e:any) => {
-        e.preventDefault();
-        axios.post(`${API.SERVER}/users/save`, 
-        {username, password, email, name, phone, job},
-         AxiosConfig())
-        .then(res => {
-            alert(JSON.stringify(res.data.message))
-            router.push(`${PG.USER}/login`)
-        })
-    }
+    // const handleSubmit = (e:any) => {
+    //     e.preventDefault();
+    //     axios.post(`${API.SERVER}/users/save`, 
+    //     {username, password, email, name, phone, job},
+    //      AxiosConfig())
+    //     .then(res => {
+    //         alert(JSON.stringify(res.data.message))
+    //         router.push(`${PG.USER}/login`)
+    //     })
+    // }
 
     return(<>
 
@@ -78,7 +78,7 @@ const JoinPage : NextPage = () => {
 
     <div className="clearfix">
       <button type="button" className="cancelbtn">Cancel</button>
-      <button type="submit" className="signupbtn" onClick={handleSubmit}>Sign Up</button>
+      {/* <button type="submit" className="signupbtn" onClick={handleSubmit}>Sign Up</button> */}
     </div>
 </div>
     </>

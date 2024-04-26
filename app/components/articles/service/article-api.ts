@@ -60,3 +60,11 @@ export const saveArticleApi = async (article : IArticle) => {
         return error
     }
 }
+
+export const modifyArticleApi = async (article : IArticle) => {
+    try {
+        return (await instance().put(`/articles/modify`, article)).data
+    } catch (error) {
+        return error
+    }
+}

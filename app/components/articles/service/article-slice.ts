@@ -8,6 +8,7 @@ import {
   findAllByBoardId,
   findArticleById,
   findCountArticles,
+  modifyArticle,
   saveArticle,
 } from "./article-service";
 
@@ -52,7 +53,8 @@ export const articleSlice = createSlice({
       })
       .addCase(saveArticle.fulfilled, (state: any, { payload }: any) => {
         state.message = payload;
-      });
+      })
+      
   },
 });
 export const getAllArticles = (state: any) => state.article.array; // getter
